@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
         //        dir ('/') {
-                	sh 'docker build -t elenus/test:v2 . '
+                	sh 'docker build -t jenk/test:v2 . '
         //        }
             }
         }
