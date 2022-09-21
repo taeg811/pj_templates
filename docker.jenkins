@@ -27,7 +27,7 @@ pipeline {
                 //withCredentials([usernamePassword(credentialsId: 'nexus_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
                     echo "Service user is $SERVICE_CRED_USERNAME"
-                    docker login -u $SERVICE_CRED_USERNAME -p $SERVICE_CRED_PASSWORD 10.73.1.202:8090
+                    docker login -u $SERVICE_CRED_USERNAME -p $SERVICE_CRED_PASSWORD $REGISTRY
                     """
                 //}
             }
