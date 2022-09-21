@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
         //        dir ('/') {
-                sh 'docker build -t 10.73.1.202:8090/test:good . '
+               // sh 'docker build -t $REGISTRY/test:good . '
         //        }
             }
         }
