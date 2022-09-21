@@ -10,6 +10,14 @@ pipeline {
         timestamps()
     }
     stages {
+        stage("create docker image") {
+            steps {
+                echo " ============== start building image =================="
+        //        dir ('/') {
+                sh 'docker build -t 10.73.1.202:8090/test:good . '
+        //        }
+            }
+        }
         stage("docker login") {
             environment {
                 SERVICE_CRED = credentials('nexus_hub')
@@ -20,17 +28,8 @@ pipeline {
                     sh """
                     echo "Service user is $SERVICE_CRED_USERNAME"
                     docker login -u $SERVICE_CRED_USERNAME -p $SERVICE_CRED_PASSWORD 10.73.1.202:8090
-                 //   echo $PASSWORD | docker login -u $USERNAME 10.73.1.202:8090 --password-stdin
                     """
                 //}
-            }
-        }
-        stage("create docker image") {
-            steps {
-                echo " ============== start building image =================="
-        //        dir ('/') {
-                sh 'docker build -t 10.73.1.202:8090/test:good . '
-        //        }
             }
         }
         stage("docker push") {
