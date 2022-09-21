@@ -15,7 +15,8 @@ pipeline {
                 echo " ============== docker login =================="
                 withCredentials([usernamePassword(credentialsId: 'nexus_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh """
-                    docker login -u $USERNAME -p $PASSWORD 10.73.1.202:8090
+                //    docker login -u $USERNAME -p $PASSWORD 10.73.1.202:8090
+                    echo $CI_REGISTRY_PASSWORD | docker login -u $USERNAME 10.73.1.202:8090 --password-stdin
                     """
                }
             }
