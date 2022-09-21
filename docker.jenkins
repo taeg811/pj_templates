@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo " ============== start pushing image =================="
                 sh '''
-                docker push 10.73.1.202:8090/test:good
+                docker push $REGISTRY/test:good
                 '''
             }
         }
