@@ -10,35 +10,22 @@ pipeline {
         timestamps()
     }
     stages {
-        stage("create docker image") {
-            steps {
-                echo " ============== start building image =================="
+        //stage("create docker image yet") {
+         //   steps {
+          //      echo " ============== start building image =================="
         //        dir ('/') {
                // sh 'docker build -t $REGISTRY/test:good . '
         //        }
-            }
-        }
-        stage("docker login") {
-            environment {
-                SERVICE_CRED = credentials('nexus_hub')
-            }
-            steps {
-                echo " ============== docker login =================="
-                //withCredentials([usernamePassword(credentialsId: 'nexus_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh """
-                    echo "Service user is $SERVICE_CRED_USERNAME"
-                    docker login -u $SERVICE_CRED_USERNAME -p $SERVICE_CRED_PASSWORD $REGISTRY
-                    """
-                //}
-            }
-        }
-        stage("docker push") {
-            steps {
-                echo " ============== start pushing image =================="
-                sh '''
-                docker push $REGISTRY/test:good
-                '''
-            }
-        }
+        //    }
+        //}
+        stage("docker login, build and push") {
+            staps {
+                echo "============= withRegistry============================"
+                docker.withRegistry('10.73.1.202:8091', 'nexus_hub') {
+                    def customImage = docker.build("10.73.1.202:8091/newimage:v1")
+                    customImage.push()
+                }
+            }    
+        }   
     }
 }
