@@ -20,11 +20,13 @@ pipeline {
         //}
         stage("docker login, build and push") {
             steps {
-                echo "============= withRegistry============================"
-                docker.withRegistry('10.73.1.202:8091', 'nexus_hub') {
-                    def customImage = docker.build("10.73.1.202:8091/newimage:v1")
-                    customImage.push()
-                }
+                script {
+                    echo "============= withRegistry============================"
+                    docker.withRegistry('10.73.1.202:8091', 'nexus_hub') {
+                        def customImage = docker.build("10.73.1.202:8091/newimage:v1")
+                        customImage.push()
+                    }
+                }    
             }    
         }   
     }
