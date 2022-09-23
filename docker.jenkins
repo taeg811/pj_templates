@@ -25,7 +25,8 @@ pipeline {
                     //    def customImage = '10.73.1.202:8091/test:good'
                     //    customImage.push()
                     // docker login -u admin -p '$PASSWORD' 10.73.1.202:8091
-                    withCredentials([string(credentialsId: 'nexus', variable: 'PASSWORD')]) {
+                   // withCredentials([string(credentialsId: 'nexus', variable: 'PASSWORD')]) {
+                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
                         sh """
                         echo $PASSWORD | docker login -u admin 10.73.1.202:8091 --password-stdin
                         docker push 10.73.1.202:8091/test1:v1
