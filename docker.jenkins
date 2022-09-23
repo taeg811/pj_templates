@@ -24,9 +24,9 @@ pipeline {
                         //def customImage = docker.build("10.73.1.202:8091/newimage:v1")
                     //    def customImage = '10.73.1.202:8091/test:good'
                     //    customImage.push()
-                    withCredentials([string(credentialsId: 'nexus_hub', variable: 'nexuspwd')]) {
+                    withCredentials([string(credentialsId: 'nexus', variable: 'PASSWORD')]) {
                         sh """
-                        docker login -u admin -p '$nexuspwd' 10.73.1.202:8091
+                        docker login -u admin -p '$PASSWORD' 10.73.1.202:8091
                         docker push 10.73.1.202:8091/test1:v1
                         """
                     }
