@@ -26,7 +26,7 @@ pipeline {
                     //    customImage.push()
                     withCredentials([string(credentialsId: 'nexus_hub', variable: 'nexuspwd')]) {
                         sh """
-                        docker login -u admin -p ${nexuspwd} 10.73.1.202:8091
+                        docker login -u admin -p '$nexuspwd' 10.73.1.202:8091
                         docker push 10.73.1.202:8091/test1:v1
                         """
                     }
