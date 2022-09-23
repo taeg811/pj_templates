@@ -13,7 +13,7 @@ pipeline {
         stage("create docker image ") {
             steps {
                 echo " ============== start building image =================="
-                sh 'docker build -t 10.73.1.202:8091/test1:v1 . '
+                sh 'docker build -t 10.73.1.202:8091/test2:v1 . '
             }
         }
         stage("docker login and push") {
@@ -29,7 +29,7 @@ pipeline {
                      withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) { 
                         sh """
                         echo $PASSWORD | docker login -u admin 10.73.1.202:8091 --password-stdin
-                        docker push 10.73.1.202:8091/test1:v1
+                        docker push 10.73.1.202:8091/test2:v1
                         """
                     }
                    // }
