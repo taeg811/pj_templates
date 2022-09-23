@@ -10,23 +10,27 @@ pipeline {
         timestamps()
     }
     stages {
-        //stage("create docker image yet") {
-         //   steps {
-          //      echo " ============== start building image =================="
-        //        dir ('/') {
-               // sh 'docker build -t $REGISTRY/test:good . '
-        //        }
-        //    }
-        //}
-        stage("docker login, build and push") {
+        stage("create docker image ") {
+            steps {
+                echo " ============== start building image =================="
+                sh 'docker build -t 10.73.1.202:8091/test1:v1 . '
+            }
+        }
+        stage("docker login and push") {
             steps {
                 script {
                     //echo "============= withRegistry============================"
-                    docker.withRegistry('http://10.73.1.202:8091', 'nexus_hub') {
+                    //docker.withRegistry('http://10.73.1.202:8091', 'nexus_hub') {
                         //def customImage = docker.build("10.73.1.202:8091/newimage:v1")
-                        def customImage = '10.73.1.202:8090/test:good'
-                        customImage.push()
+                    //    def customImage = '10.73.1.202:8091/test:good'
+                    //    customImage.push()
+                    withCredentials([string(credentialsId: 'nexus_hub', variable: 'nexuspwd')]) {
+                        sh """
+                        docker login -u admin -p ${nexuspwd} 10.73.1.202:8091
+                        docker push 10.73.1.202:8091/test1:v1
+                        """
                     }
+                   // }
                 }    
             }    
         }   
